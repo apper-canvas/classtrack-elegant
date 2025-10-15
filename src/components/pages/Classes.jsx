@@ -230,21 +230,21 @@ const Classes = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredClasses.map((classItem) => {
-            const classStudents = getClassStudents(classItem.Id);
+const classStudents = getClassStudents(classItem.Id);
             return (
               <Card key={classItem.Id} className="p-6 group" hover>
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1 min-w-0">
                     <h3 className="text-lg font-semibold text-gray-900 truncate">
-                      {classItem.name}
+                      {classItem.name_c || classItem.Name}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">{classItem.subject}</p>
+                    <p className="text-sm text-gray-600 mb-2">{classItem.subject_c}</p>
                     <div className="flex flex-wrap gap-2">
                       <Badge variant="primary" size="sm">
-                        {classItem.academicYear}
+                        {classItem.academic_year_c}
                       </Badge>
                       <Badge variant="secondary" size="sm">
-                        {classItem.semester}
+                        {classItem.semester_c}
                       </Badge>
                     </div>
                   </div>
@@ -276,10 +276,10 @@ const Classes = () => {
                       {classStudents.slice(0, 5).map((student) => (
                         <img
                           key={student.Id}
-                          src={student.photoUrl || `https://ui-avatars.com/api/?name=${student.firstName}+${student.lastName}&background=2563eb&color=fff`}
-                          alt={`${student.firstName} ${student.lastName}`}
+                          src={student.photo_url_c || `https://ui-avatars.com/api/?name=${student.first_name_c}+${student.last_name_c}&background=2563eb&color=fff`}
+                          alt={`${student.first_name_c} ${student.last_name_c}`}
                           className="w-8 h-8 rounded-full border-2 border-white object-cover"
-                          title={`${student.firstName} ${student.lastName}`}
+                          title={`${student.first_name_c} ${student.last_name_c}`}
                         />
                       ))}
                       {classStudents.length > 5 && (
@@ -302,7 +302,7 @@ const Classes = () => {
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowModal(false)} />
           
           <div className="relative bg-surface rounded-xl shadow-2xl w-full max-w-md mx-4">
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+<div className="flex items-center justify-between p-6 border-b border-gray-200">
               <h2 className="text-xl font-bold text-gray-900">
                 {selectedClass ? "Edit Class" : "Add New Class"}
               </h2>
@@ -318,43 +318,43 @@ const Classes = () => {
               <div className="space-y-4">
                 <FormField
                   label="Class Name"
-                  name="name"
-                  value={formData.name}
+                  name="name_c"
+                  value={formData.name_c}
                   onChange={handleChange}
-                  error={formErrors.name}
+                  error={formErrors.name_c}
                   required
                   placeholder="e.g., Mathematics 9A"
                 />
 
                 <FormField
                   label="Subject"
-                  name="subject"
-                  value={formData.subject}
+                  name="subject_c"
+                  value={formData.subject_c}
                   onChange={handleChange}
-                  error={formErrors.subject}
+                  error={formErrors.subject_c}
                   required
                   placeholder="e.g., Mathematics"
                 />
 
                 <FormField
                   label="Academic Year"
-                  name="academicYear"
-                  value={formData.academicYear}
+                  name="academic_year_c"
+                  value={formData.academic_year_c}
                   onChange={handleChange}
-                  error={formErrors.academicYear}
+                  error={formErrors.academic_year_c}
                   required
                   placeholder="e.g., 2023-2024"
                 />
 
                 <FormField
                   label="Semester"
-                  name="semester"
-                  error={formErrors.semester}
+                  name="semester_c"
+                  error={formErrors.semester_c}
                   required
                 >
                   <select
-                    name="semester"
-                    value={formData.semester}
+                    name="semester_c"
+                    value={formData.semester_c}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary bg-white"
                   >

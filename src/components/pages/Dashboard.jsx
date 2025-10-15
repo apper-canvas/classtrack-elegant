@@ -33,7 +33,7 @@ const Dashboard = () => {
     setLoading(true);
     setError(null);
     
-    try {
+try {
       const [studentsData, classesData, gradesData, attendanceData] = await Promise.all([
         studentService.getAll(),
         classService.getAll(),
@@ -41,11 +41,35 @@ const Dashboard = () => {
         attendanceService.getAll()
       ]);
       
+      const processedStudents = studentsData.map(s => ({
+        ...s,
+        first_name_c: s.first_name_c || "",
+        last_name_c: s.last_name_c || "",
+        student_id_c: s.student_id_c || "",
+        class_ids_c: s.class_ids_c || ""
+      }));
+
+      const processedGrades = gradesData.map(g => ({
+        ...g,
+        student_id_c: g.student_id_c?.Id || g.student_id_c,
+        class_id_c: g.class_id_c?.Id || g.class_id_c,
+        assignment_name_c: g.assignment_name_c || "",
+        percentage_c: g.percentage_c || 0,
+        date_c: g.date_c || ""
+      }));
+
+      const processedAttendance = attendanceData.map(a => ({
+        ...a,
+        student_id_c: a.student_id_c?.Id || a.student_id_c,
+        status_c: a.status_c || "absent",
+        date_c: a.date_c || ""
+      }));
+      
       setData({
-        students: studentsData,
+        students: processedStudents,
         classes: classesData,
-        grades: gradesData,
-        attendance: attendanceData
+        grades: processedGrades,
+        attendance: processedAttendance
       });
     } catch (err) {
       console.error("Error loading dashboard data:", err);
@@ -57,25 +81,25 @@ const Dashboard = () => {
 
   const calculateAverageGPA = () => {
     if (data.grades.length === 0) return 0;
-    const total = data.grades.reduce((sum, grade) => sum + grade.percentage, 0);
+const total = data.grades.reduce((sum, grade) => sum + (grade.percentage_c || 0), 0);
     return Math.round(total / data.grades.length);
   };
 
-  const calculateAttendanceRate = () => {
+const calculateAttendanceRate = () => {
     if (data.attendance.length === 0) return 0;
     const presentCount = data.attendance.filter(record => 
-      record.status === "present" || record.status === "excused"
+      record.status_c === "present" || record.status_c === "excused"
     ).length;
     return Math.round((presentCount / data.attendance.length) * 100);
   };
-
-  const getAtRiskStudents = () => {
+const getAtRiskStudents = () => {
     const studentGrades = {};
     data.grades.forEach(grade => {
-      if (!studentGrades[grade.studentId]) {
-        studentGrades[grade.studentId] = [];
+      const studentId = grade.student_id_c?.Id || grade.student_id_c;
+      if (!studentGrades[studentId]) {
+        studentGrades[studentId] = [];
       }
-      studentGrades[grade.studentId].push(grade.percentage);
+      studentGrades[studentId].push(grade.percentage_c || 0);
     });
 
     const atRiskStudents = [];
@@ -96,40 +120,42 @@ const Dashboard = () => {
   };
 
   const getRecentActivity = () => {
-    const activities = [];
+const activities = [];
     
     // Recent grades
     data.grades
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .sort((a, b) => new Date(b.date_c) - new Date(a.date_c))
       .slice(0, 3)
       .forEach(grade => {
-        const student = data.students.find(s => s.Id.toString() === grade.studentId);
+        const studentId = grade.student_id_c?.Id || grade.student_id_c;
+        const student = data.students.find(s => s.Id.toString() === studentId.toString());
         if (student) {
           activities.push({
             id: `grade-${grade.Id}`,
             type: "grade",
-            message: `${student.firstName} ${student.lastName} scored ${grade.percentage}% on ${grade.assignmentName}`,
-            time: grade.date,
+            message: `${student.first_name_c} ${student.last_name_c} scored ${grade.percentage_c}% on ${grade.assignment_name_c}`,
+            time: grade.date_c,
             icon: "Award",
-            color: grade.percentage >= 80 ? "success" : grade.percentage >= 70 ? "warning" : "error"
+            color: grade.percentage_c >= 80 ? "success" : grade.percentage_c >= 70 ? "warning" : "error"
           });
         }
       });
 
     // Recent attendance
     data.attendance
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .sort((a, b) => new Date(b.date_c) - new Date(a.date_c))
       .slice(0, 2)
       .forEach(record => {
-        const student = data.students.find(s => s.Id.toString() === record.studentId);
-        if (student && record.status !== "present") {
+        const studentId = record.student_id_c?.Id || record.student_id_c;
+        const student = data.students.find(s => s.Id.toString() === studentId.toString());
+        if (student && record.status_c !== "present") {
           activities.push({
             id: `attendance-${record.Id}`,
             type: "attendance",
-            message: `${student.firstName} ${student.lastName} was ${record.status}`,
-            time: record.date,
+            message: `${student.first_name_c} ${student.last_name_c} was ${record.status_c}`,
+            time: record.date_c,
             icon: "Calendar",
-            color: record.status === "late" ? "warning" : record.status === "absent" ? "error" : "info"
+            color: record.status_c === "late" ? "warning" : record.status_c === "absent" ? "error" : "info"
           });
         }
       });
@@ -221,17 +247,17 @@ const Dashboard = () => {
               />
             ) : (
               atRiskStudents.map((student) => (
-                <div key={student.Id} className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+<div key={student.Id} className="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                   <img 
-                    src={student.photoUrl || `https://ui-avatars.com/api/?name=${student.firstName}+${student.lastName}&background=f59e0b&color=fff`}
-                    alt={`${student.firstName} ${student.lastName}`}
+                    src={student.photo_url_c || `https://ui-avatars.com/api/?name=${student.first_name_c}+${student.last_name_c}&background=f59e0b&color=fff`}
+                    alt={`${student.first_name_c} ${student.last_name_c}`}
                     className="w-10 h-10 rounded-full object-cover"
                   />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">
-                      {student.firstName} {student.lastName}
+                      {student.first_name_c} {student.last_name_c}
                     </p>
-                    <p className="text-xs text-gray-500">{student.studentId}</p>
+                    <p className="text-xs text-gray-500">{student.student_id_c}</p>
                   </div>
                   <Badge variant="warning" size="sm">
                     {student.avgGrade}% avg
@@ -277,7 +303,7 @@ const Dashboard = () => {
                 className="py-6"
               />
             ) : (
-              recentActivity.map((activity) => (
+recentActivity.map((activity) => (
                 <div key={activity.id} className="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br ${
                     activity.color === "success" ? "from-success/10 to-green-600/10" :
