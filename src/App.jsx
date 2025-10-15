@@ -128,7 +128,7 @@ function AppContent() {
 function App() {
   return (
     <Provider store={store}>
-      <AppContent />
+      <RouterProvider router={router} />
     </Provider>
   );
 }
