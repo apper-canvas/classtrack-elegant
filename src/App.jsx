@@ -27,10 +27,10 @@ function AppContent() {
       return;
     }
 
-    ApperUI.setup(client, {
+ApperUI.setup(client, {
       target: '#authentication',
       clientId: import.meta.env.VITE_APPER_PROJECT_ID,
-      view: 'both',
+      view: 'login',
       onSuccess: function (user) {
         setIsInitialized(true);
         let currentPath = window.location.pathname + window.location.search;
