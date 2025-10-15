@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
-import ApperIcon from "@/components/ApperIcon";
-import StatCard from "@/components/molecules/StatCard";
-import Card from "@/components/atoms/Card";
-import Badge from "@/components/atoms/Badge";
-import Button from "@/components/atoms/Button";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
+import React, { useEffect, useState } from "react";
 import { studentService } from "@/services/api/studentService";
-import { classService } from "@/services/api/classService";
 import { gradeService } from "@/services/api/gradeService";
 import { attendanceService } from "@/services/api/attendanceService";
+import { classService } from "@/services/api/classService";
+import { toast } from "react-toastify";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Classes from "@/components/pages/Classes";
+import Grades from "@/components/pages/Grades";
+import Students from "@/components/pages/Students";
+import Attendance from "@/components/pages/Attendance";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import StatCard from "@/components/molecules/StatCard";
 
 const Dashboard = () => {
   const [data, setData] = useState({
