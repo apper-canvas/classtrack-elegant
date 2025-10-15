@@ -1,0 +1,122 @@
+[
+  {
+    "Id": 1,
+    "studentId": "1",
+    "classId": "1",
+    "assignmentName": "Algebra Quiz 1",
+    "score": 92,
+    "maxScore": 100,
+    "percentage": 92,
+    "date": "2024-01-15",
+    "category": "Quiz",
+    "notes": "Excellent work on quadratic equations"
+  },
+  {
+    "Id": 2,
+    "studentId": "1",
+    "classId": "1",
+    "assignmentName": "Geometry Test",
+    "score": 88,
+    "maxScore": 100,
+    "percentage": 88,
+    "date": "2024-01-22",
+    "category": "Test",
+    "notes": ""
+  },
+  {
+    "Id": 3,
+    "studentId": "1",
+    "classId": "2",
+    "assignmentName": "Poetry Analysis Essay",
+    "score": 95,
+    "maxScore": 100,
+    "percentage": 95,
+    "date": "2024-01-18",
+    "category": "Essay",
+    "notes": "Outstanding interpretation of symbolism"
+  },
+  {
+    "Id": 4,
+    "studentId": "2",
+    "classId": "1",
+    "assignmentName": "Algebra Quiz 1",
+    "score": 76,
+    "maxScore": 100,
+    "percentage": 76,
+    "date": "2024-01-15",
+    "category": "Quiz",
+    "notes": "Need to review factoring"
+  },
+  {
+    "Id": 5,
+    "studentId": "2",
+    "classId": "3",
+    "assignmentName": "Cell Structure Lab",
+    "score": 82,
+    "maxScore": 100,
+    "percentage": 82,
+    "date": "2024-01-20",
+    "category": "Lab",
+    "notes": "Good observation skills"
+  },
+  {
+    "Id": 6,
+    "studentId": "3",
+    "classId": "2",
+    "assignmentName": "Poetry Analysis Essay",
+    "score": 91,
+    "maxScore": 100,
+    "percentage": 91,
+    "date": "2024-01-18",
+    "category": "Essay",
+    "notes": "Strong thesis and supporting evidence"
+  },
+  {
+    "Id": 7,
+    "studentId": "3",
+    "classId": "3",
+    "assignmentName": "Cell Structure Lab",
+    "score": 94,
+    "maxScore": 100,
+    "percentage": 94,
+    "date": "2024-01-20",
+    "category": "Lab",
+    "notes": "Excellent microscopy technique"
+  },
+  {
+    "Id": 8,
+    "studentId": "4",
+    "classId": "1",
+    "assignmentName": "Algebra Quiz 1",
+    "score": 85,
+    "maxScore": 100,
+    "percentage": 85,
+    "date": "2024-01-15",
+    "category": "Quiz",
+    "notes": ""
+  },
+  {
+    "Id": 9,
+    "studentId": "4",
+    "classId": "2",
+    "assignmentName": "Poetry Analysis Essay",
+    "score": 78,
+    "maxScore": 100,
+    "percentage": 78,
+    "date": "2024-01-18",
+    "category": "Essay",
+    "notes": "Could use more detailed analysis"
+  },
+  {
+    "Id": 10,
+    "studentId": "5",
+    "classId": "1",
+    "assignmentName": "Algebra Quiz 1",
+    "score": 90,
+    "maxScore": 100,
+    "percentage": 90,
+    "date": "2024-01-15",
+    "category": "Quiz",
+    "notes": "Great improvement from last week"
+  }
+]
